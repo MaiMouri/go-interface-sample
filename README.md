@@ -1,8 +1,9 @@
 # go-interface-sample
-# 定義
+## 定義
 
 
-## producerの定義
+
+### producerの定義
 
 ```go
 type Dryer struct{}
@@ -28,6 +29,7 @@ func (d *Dryer) drying() bool {
 	return true
 }
 ```
+
 
 ## consumerの定義
 
@@ -67,7 +69,7 @@ func (b *BathroomOutlet) Laundry() {
 }
 ```
 
-## interfaceの定義
+### interfaceの定義
 
 consumer側で使用するにはproducerの機能をラップしている実装である必要がある。
 ※ この時パブリック関数から呼ばれるプライベート関数については実装不要。
@@ -81,9 +83,9 @@ type IBathroomOutlet interface {
 }
 ```
 
-# テスト
+## テスト
 
-## Mockの構造体
+### Mockの構造体
 元の構造体を実装したMockを定義する。mockを作りたいメソッドは`Fake`等わかりやすくした名称で実装する。
 
 ```go
@@ -91,9 +93,11 @@ type MockBathroomOutlet struct {
 	BathroomOutlet        // BathroomOutletの持つ要素をカバーするために元の構造体を実装
 	FakeHairDrying func() // HairDryingメソッドの結果を差し替えるための新メソッド追加
 }
+
 ```
 
-## Fakeメソッドを呼び出すように元の関数を変更する
+### Fakeメソッドを呼び出すように元の関数を変更する
+
 
 Mock構造体に対して呼ぶメソッドの中身を変更する。Mock構造体を通して呼ばれたHairDrying()は、FakeHairDrying()を呼ぶ。
 ```go
@@ -103,7 +107,9 @@ func (mb *MockBathroomOutlet) HairDrying() { // レシーバをMockに変更
 
 ```
 
-## Testコードの書き方
+
+
+### Testコードの書き方
 
 ```go
 func TestHairDrying_mockを使用(t *testing.T) {
